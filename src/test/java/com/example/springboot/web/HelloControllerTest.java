@@ -39,6 +39,5 @@ public class HelloControllerTest {
                 //응답 본문의 내용을 검증한다.
                 //Controller 에서 "hello" 를 리턴하기 때문에 이 값이 맞는지 검증.
                 .andExpect(content().string(hello));
-        System.out.println("test");
     }
 }
