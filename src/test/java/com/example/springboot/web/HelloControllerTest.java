@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -38,6 +39,7 @@ public class HelloControllerTest {
                 .andExpect(status().isOk())
                 //응답 본문의 내용을 검증한다.
                 //Controller 에서 "hello" 를 리턴하기 때문에 이 값이 맞는지 검증.
-                .andExpect(content().string(hello));
+                .andExpect(content().string(hello))
+                .andDo(MockMvcResultHandlers.print());// test 응답 결과에 대한 모든 내용 출력
     }
 }
