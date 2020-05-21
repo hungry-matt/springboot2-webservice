@@ -35,6 +35,8 @@ repositories {
 //주의 할점은 특정 버전을 명시 하지 않아야 맨위에 작성한 springBootVersion 의 버전을 따라가게 된다.
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
