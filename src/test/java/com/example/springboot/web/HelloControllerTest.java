@@ -8,9 +8,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 //테스트를 진행할 때 Junit 에 내장된 실행자 외에 다른 실행자를 실행 시킨다.
 //스프링 부트 테스트와 Junit 사이에 연결자 역할.
@@ -41,5 +41,24 @@ public class HelloControllerTest {
                 //Controller 에서 "hello" 를 리턴하기 때문에 이 값이 맞는지 검증.
                 .andExpect(content().string(hello))
                 .andDo(MockMvcResultHandlers.print());// test 응답 결과에 대한 모든 내용 출력
+    }
+
+    @Test
+    public void helloDto가_리턴된다() throws Exception {
+        String name = "hello";
+        int amount = 1000;
+
+        mvc.perform(get("/hello/dto")
+                //요청 파라미터 설정
+                //String 만 허용된다.
+                .param("name", name)
+                .param("amount", String.valueOf(amount))
+                )
+                .andExpect(status().isOk())
+                //json 응답값을 필드별로 검증할 수 있는 메소드
+                //$를 기준으로 필드명을 명시
+                .andExpect(jsonPath("$.name", is(name)))
+                .andExpect(jsonPath("$.amount", is(amount)))
+                .andDo(MockMvcResultHandlers.print());
     }
 }
